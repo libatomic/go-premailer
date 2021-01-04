@@ -45,7 +45,7 @@ func main() {
 				options.RemoveClasses = true
 			}
 			if cssToAttributes == "false" {
-				options.CssToAttributes = false
+				options.CSSToAttributes = false
 			}
 			pre, err := premailer.NewPremailerFromString(html, options)
 			if err == nil {

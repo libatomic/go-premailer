@@ -9,6 +9,7 @@ import (
 	"sync"
 
 	"github.com/PuerkitoBio/goquery"
+	zerowidth "github.com/trubitsyn/go-zero-width"
 	"github.com/vanng822/css"
 	"golang.org/x/net/html"
 )
@@ -29,12 +30,12 @@ var notSupportedSelector = regexp.MustCompile("(?i)\\:(checked|disabled|enabled|
 
 type premailer struct {
 	doc       *goquery.Document
-	elIdAttr  string
+	elIDAttr  string
 	elements  map[string]*elementRules
 	rules     []*styleRule
 	leftover  []*css.CSSRule
 	allRules  [][]*css.CSSRule
-	elementId int
+	elementID int
 	processed bool
 	options   *Options
 }
@@ -48,7 +49,7 @@ func NewPremailer(doc *goquery.Document, options *Options) Premailer {
 	pr.allRules = make([][]*css.CSSRule, 0)
 	pr.leftover = make([]*css.CSSRule, 0)
 	pr.elements = make(map[string]*elementRules)
-	pr.elIdAttr = "pr-el-id"
+	pr.elIDAttr = "pr-el-id"
 	if options == nil {
 		options = NewOptions()
 	}
@@ -80,6 +81,8 @@ func (pr *premailer) sortRules() {
 
 			selectors := strings.Split(rule.Style.SelectorText, ",")
 			for _, selector := range selectors {
+				selector = zerowidth.RemoveZeroWidthSpace(selector)
+
 				if unmergableSelector.MatchString(selector) || notSupportedSelector.MatchString(selector) {
 					// cause longer css
 					pr.leftover = append(pr.leftover, copyRule(selector, rule))
@@ -92,11 +95,11 @@ func (pr *premailer) sortRules() {
 				}
 				if len(normalStyles) > 0 {
 					pr.rules = append(pr.rules, &styleRule{makeSpecificity(0, ruleSetIndex, ruleIndex, selector), selector, normalStyles})
-					ruleIndex += 1
+					ruleIndex++
 				}
 				if len(importantStyles) > 0 {
 					pr.rules = append(pr.rules, &styleRule{makeSpecificity(1, ruleSetIndex, ruleIndex, selector), selector, importantStyles})
-					ruleIndex += 1
+					ruleIndex++
 				}
 			}
 		}
@@ -116,7 +119,10 @@ func (pr *premailer) collectRules() {
 			defer wg.Done()
 			ss := css.Parse(s.Text())
 			pr.allRules[ruleSetIndex] = ss.GetCSSRuleList()
-			s.ReplaceWithHtml("")
+
+			if pr.options.RemoveStyles {
+				s.ReplaceWithHtml("")
+			}
 		}(len(pr.allRules) - 1)
 	})
 	wg.Wait()
@@ -126,20 +132,20 @@ func (pr *premailer) collectRules() {
 func (pr *premailer) collectElements() {
 	for _, rule := range pr.rules {
 		pr.doc.Find(rule.selector).Each(func(_ int, s *goquery.Selection) {
-			if id, exist := s.Attr(pr.elIdAttr); exist {
+			if id, exist := s.Attr(pr.elIDAttr); exist {
 				pr.elements[id].rules = append(pr.elements[id].rules, rule)
 			} else {
-				id := strconv.Itoa(pr.elementId)
-				s.SetAttr(pr.elIdAttr, id)
+				id := strconv.Itoa(pr.elementID)
+				s.SetAttr(pr.elIDAttr, id)
 				rules := make([]*styleRule, 0)
 				rules = append(rules, rule)
 				pr.elements[id] = &elementRules{
-					element: s,
-					rules: rules,
-					cssToAttributes: pr.options.CssToAttributes,
+					element:           s,
+					rules:             rules,
+					cssToAttributes:   pr.options.CSSToAttributes,
 					keepBangImportant: pr.options.KeepBangImportant,
 				}
-				pr.elementId += 1
+				pr.elementID++
 			}
 		})
 
@@ -149,7 +155,7 @@ func (pr *premailer) collectElements() {
 func (pr *premailer) applyInline() {
 	for _, element := range pr.elements {
 		element.inline()
-		element.element.RemoveAttr(pr.elIdAttr)
+		element.element.RemoveAttr(pr.elIDAttr)
 		if pr.options.RemoveClasses {
 			element.element.RemoveAttr("class")
 		}

@@ -5,9 +5,10 @@ type Options struct {
 	// Remove class attribute from element
 	// Default false
 	RemoveClasses bool
+
 	// Copy related CSS properties into HTML attributes (e.g. background-color to bgcolor)
 	// Default true
-	CssToAttributes bool
+	CSSToAttributes bool
 
 	// If true, then style declarations that have "!important" will keep the "!important" in the final
 	// style attribute
@@ -16,12 +17,15 @@ type Options struct {
 	// gives
 	//		<p style="width: 100% !important">Text</p>
 	KeepBangImportant bool
+
+	// RemoveStyles if true removes the style tags
+	RemoveStyles bool
 }
 
 // NewOptions return an Options instance with default value
 func NewOptions() *Options {
 	options := &Options{}
-	options.CssToAttributes = true
+	options.CSSToAttributes = true
 	options.KeepBangImportant = false
 	return options
 }

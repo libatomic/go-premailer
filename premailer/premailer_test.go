@@ -218,7 +218,7 @@ func TestCssToAttributesFalse(t *testing.T) {
         </html>`
 
 	options := &Options{}
-	options.CssToAttributes = false
+	options.CSSToAttributes = false
 	p, err := NewPremailerFromString(html, options)
 	assert.Nil(t, err)
 	resultHTML, err := p.Transform()

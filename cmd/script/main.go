@@ -29,7 +29,7 @@ func main() {
 	start := time.Now()
 	options := premailer.NewOptions()
 	options.RemoveClasses = removeClasses
-	options.CssToAttributes = !skipCssToAttributes
+	options.CSSToAttributes = !skipCssToAttributes
 	prem, err := premailer.NewPremailerFromFile(inputFile, options)
 	if err != nil {
 		log.Fatal(err)
