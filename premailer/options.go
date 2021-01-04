@@ -20,6 +20,9 @@ type Options struct {
 
 	// RemoveStyles if true removes the style tags
 	RemoveStyles bool
+
+	// Only return the body element
+	BodyOnly bool
 }
 
 // NewOptions return an Options instance with default value

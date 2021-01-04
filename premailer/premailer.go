@@ -208,5 +208,9 @@ func (pr *premailer) Transform() (string, error) {
 		pr.addLeftover()
 		pr.processed = true
 	}
+
+	if pr.options.BodyOnly {
+		return pr.doc.Find("body").Html()
+	}
 	return pr.doc.Html()
 }
