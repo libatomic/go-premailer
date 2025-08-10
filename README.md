@@ -4,19 +4,19 @@ Inline styling for HTML mail in golang
 
 # Document
 [![Build Status](https://travis-ci.org/vanng822/go-premailer.svg?branch=master)](https://travis-ci.org/vanng822/go-premailer)
-[![GoDoc](https://godoc.org/github.com/vanng822/go-premailer/premailer?status.svg)](https://godoc.org/github.com/vanng822/go-premailer/premailer)
-[![GoCover](http://gocover.io/_badge/github.com/vanng822/go-premailer/premailer)](http://gocover.io/github.com/vanng822/go-premailer/premailer)
-[![Go Report Card](https://goreportcard.com/badge/github.com/vanng822/go-premailer)](https://goreportcard.com/report/github.com/vanng822/go-premailer)
+[![GoDoc](https://godoc.org/github.com/libatomic/go-premailer/premailer?status.svg)](https://godoc.org/github.com/libatomic/go-premailer/premailer)
+[![GoCover](http://gocover.io/_badge/github.com/libatomic/go-premailer/premailer)](http://gocover.io/github.com/libatomic/go-premailer/premailer)
+[![Go Report Card](https://goreportcard.com/badge/github.com/libatomic/go-premailer)](https://goreportcard.com/report/github.com/libatomic/go-premailer)
 
 # install
 
-	go get github.com/vanng822/go-premailer/premailer
+	go get github.com/libatomic/go-premailer/premailer
 
 # Example
 
 	import (
 		"fmt"
-		"github.com/vanng822/go-premailer/premailer"
+		"github.com/libatomic/go-premailer/premailer"
 		"log"
 	)
 
