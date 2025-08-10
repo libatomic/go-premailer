@@ -1,4 +1,4 @@
-module github.com/libatomic/go-premailer
+module github.com/libatomic/go-premailer/v2
 
 go 1.23.0
 
