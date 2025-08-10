@@ -11,9 +11,9 @@ import (
 type void struct{}
 
 type elementRules struct {
-	element         *goquery.Selection
-	rules           []*styleRule
-	cssToAttributes bool
+	element           *goquery.Selection
+	rules             []*styleRule
+	cssToAttributes   bool
 	keepBangImportant bool
 }
 
