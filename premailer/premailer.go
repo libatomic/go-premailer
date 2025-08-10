@@ -72,14 +72,14 @@ func (pr *premailer) sortRules() {
 			importantStyles := make([]*css.CSSStyleDeclaration, 0)
 
 			for _, s := range rule.Style.Styles {
-				if s.Important == 1 {
+				if s.Important {
 					importantStyles = append(importantStyles, s)
 				} else {
 					normalStyles = append(normalStyles, s)
 				}
 			}
 
-			selectors := strings.Split(rule.Style.SelectorText, ",")
+			selectors := strings.Split(rule.Style.Selector.Text(), ",")
 			for _, selector := range selectors {
 				selector = zerowidth.RemoveZeroWidthSpace(selector)
 
@@ -180,7 +180,7 @@ func (pr *premailer) addLeftover() {
 				}
 				cssData = append(cssData, fmt.Sprintf("%s %s{\n%s\n}\n",
 					rule.Type.Text(),
-					rule.Style.SelectorText,
+					rule.Style.Selector.Text(),
 					strings.Join(mcssData, "\n")))
 			} else {
 				cssData = append(cssData, makeRuleImportant(rule))
