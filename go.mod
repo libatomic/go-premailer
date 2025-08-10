@@ -10,7 +10,6 @@ require (
 	github.com/trubitsyn/go-zero-width v1.0.1
 	github.com/unrolled/render v1.7.0
 	github.com/vanng822/css v1.0.1
-	github.com/vanng822/go-premailer v1.25.0
 	github.com/vanng822/r2router v0.0.0-20150523112421-1023140a4f30
 	golang.org/x/net v0.41.0
 )
