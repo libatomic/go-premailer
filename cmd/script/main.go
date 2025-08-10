@@ -7,7 +7,7 @@ import (
 	"os"
 	"time"
 
-	"github.com/libatomic/go-premailer/premailer"
+	"github.com/libatomic/go-premailer/premailer/v2"
 )
 
 func main() {

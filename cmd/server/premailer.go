@@ -9,7 +9,7 @@ import (
 	"os/signal"
 	"syscall"
 
-	"github.com/libatomic/go-premailer/premailer"
+	"github.com/libatomic/go-premailer/premailer/v2"
 	"github.com/unrolled/render"
 	"github.com/vanng822/r2router"
 )

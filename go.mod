@@ -6,6 +6,7 @@ toolchain go1.24.4
 
 require (
 	github.com/PuerkitoBio/goquery v1.10.3
+	github.com/libatomic/go-premailer v1.9.6
 	github.com/stretchr/testify v1.10.0
 	github.com/trubitsyn/go-zero-width v1.0.1
 	github.com/unrolled/render v1.7.0
